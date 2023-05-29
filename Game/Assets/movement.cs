@@ -14,8 +14,10 @@ public class movement : MonoBehaviour
     void Update()
     {
         if(Input.GetKeyDown(KeyCode.Space)){
+             Debug.Log("Space");
             //Spacebar was pressed
              transform.Translate(Vector3.forward * Time.deltaTime);
+            
         }
     }
 }
