@@ -13,6 +13,9 @@ public class movement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if(Input.GetKeyDown(KeyCode.Space)){
+            //Spacebar was pressed
+             transform.Translate(Vector3.forward * Time.deltaTime);
+        }
     }
 }
