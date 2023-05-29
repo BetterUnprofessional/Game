@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
  
- public class example : MonoBehaviour {
+ public class movement : MonoBehaviour {
      //Variables
      public float speed = 6.0F;
      public float jumpSpeed = 8.0F; 
@@ -14,6 +14,7 @@ using UnityEngine;
          CharacterController controller = GetComponent<CharacterController>();
          // is the controller on the ground?
          if (controller.isGrounded) {
+            Debug.Log("hello");
              //Feed moveDirection with input.
              moveDirection = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
              moveDirection = transform.TransformDirection(moveDirection);
@@ -22,7 +23,7 @@ using UnityEngine;
              //Jumping
              if (Input.GetButton("Jump"))
                  moveDirection.y = jumpSpeed;
-             
+                Debug.Log("hello");
          }
          //Applying gravity to the controller
          moveDirection.y -= gravity * Time.deltaTime;
