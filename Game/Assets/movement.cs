@@ -4,10 +4,13 @@ using UnityEngine;
 
 public class movement : MonoBehaviour
 {
+
+    Vector3 Move;
+
     // Start is called before the first frame update
     void Start()
     {
-        
+        Move = new Vector3(5, 6, 5);
     }
 
     // Update is called once per frame
@@ -16,7 +19,8 @@ public class movement : MonoBehaviour
         if(Input.GetKeyDown(KeyCode.Space)){
              Debug.Log("Space");
             //Spacebar was pressed
-             transform.Translate(Vector3.forward * Time.deltaTime);
+             transform.Translate(Move.z * Time.deltaTime);
+             Debug.Log(transform.position.y);
             
         }
     }
