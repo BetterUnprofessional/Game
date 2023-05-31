@@ -4,30 +4,65 @@ using UnityEngine;
 
  
  public class movement : MonoBehaviour {
-     //Variables
-     public float speed = 6.0F;
-     public float jumpSpeed = 8.0F; 
-     public float gravity = 20.0F;
-     private Vector3 moveDirection = Vector3.zero;
- 
-     void Update() {
-         CharacterController controller = GetComponent<CharacterController>();
-         // is the controller on the ground?
-         if (controller.isGrounded) {
-            Debug.Log("hello");
-             //Feed moveDirection with input.
-             moveDirection = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
-             moveDirection = transform.TransformDirection(moveDirection);
-             //Multiply it by speed.
-             moveDirection *= speed;
-             //Jumping
-             if (Input.GetButton("Jump"))
-                 moveDirection.y = jumpSpeed;
-                Debug.Log("hello");
-         }
-         //Applying gravity to the controller
-         moveDirection.y -= gravity * Time.deltaTime;
-         //Making the character move
-         controller.Move(moveDirection * Time.deltaTime);
-     }
- }
+    [Header("Movement")]
+    public float moveSpeed;
+
+    public float groundDrag;
+
+    [Header ("Ground Check")]
+    public float playerHeight;
+    public LayerMask whatIsGround;
+    bool grounded;
+
+    public Transform orientation;
+
+    float horizontalInput;
+    float verticalInput;
+
+    Vector3 moveDirection;
+
+    Rigidbody rb;
+
+    private void Start()
+    {
+        rb = GetComponent<Rigidbody>();
+        rb.freezeRotation = true;
+    }
+
+    private void Update(){
+
+        //ground check
+        grounded = Physics.Raycast(transform.position , Vector3.down, playerHeight* 0.5f + 0.2f, whatIsGround);
+
+        //handle drag
+        if (grounded)
+        {
+            rb.drag = groundDrag;
+        }
+        else
+        {
+            rb.drag = 0;
+        }
+
+        MyInput();
+    }
+
+    private void FixedUpdate() {
+        MovePlayer();
+    }
+
+    private void MyInput()
+    {
+        horizontalInput = Input.GetAxisRaw("Horizontal");
+        verticalInput = Input.GetAxisRaw("Vertical");
+    }
+
+    private void MovePlayer()
+    {
+        //calculate movement direction
+        moveDirection = orientation.forward * verticalInput + orientation.right * horizontalInput;
+
+        rb.AddForce(moveDirection.normalized * moveSpeed * 10f, ForceMode.Force);
+    }
+
+    }
