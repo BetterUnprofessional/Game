@@ -26,10 +26,10 @@ public class camera : MonoBehaviour
         float mouseX =  Input.GetAxisRaw("Mouse X") * Time.deltaTime * sensX;
         float mouseY = Input.GetAxisRaw("Mouse Y") * Time.deltaTime * sensY;
 
-        yRotation += mouseY;
+        yRotation += mouseX;
         yRotation = Mathf.Clamp(yRotation, -90f, 90f);
 
-        xRotation-= mouseX;
+        xRotation-= mouseY;
 
         transform.rotation = Quaternion.Euler(xRotation, yRotation, 0);
         orientation.rotation = Quaternion.Euler(0, yRotation, 0);
